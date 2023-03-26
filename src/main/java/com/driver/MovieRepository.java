@@ -1,12 +1,10 @@
 package com.driver;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 //import static java.lang.ConditionalSpecialCasing.entry;
 
@@ -51,7 +49,7 @@ public class MovieRepository {
     public List<String> getMoviesByDirectorName(String director){
         List<String> ans = new ArrayList<>();
         for(String movieName : movieDirectorPair.keySet()){
-            if(movieDirectorPair.get(movieName) == director){
+            if(movieDirectorPair.get(movieName).equals(director)){
                 ans.add(movieName);
             }
         }
@@ -71,10 +69,10 @@ public class MovieRepository {
 
     public String deleteDirectorByName(String name){
         directorDb.remove(name);
-        for(String movieName : movieDirectorPair.keySet()){
-            if(movieDirectorPair.get(movieName) == name){
-                movieDirectorPair.remove(movieName);
-                movieDb.remove(movieName);
+        for(String movie : movieDirectorPair.keySet()){
+            if(movieDirectorPair.get(movie).equals(name)){
+                movieDb.remove(movie);
+                movieDirectorPair.remove(movie);
             }
         }
 
@@ -90,11 +88,14 @@ public class MovieRepository {
     }
 
     public String deleteAllDirectors(){
-        directorDb.clear();
-        for(String movieName : movieDirectorPair.keySet()){
-            if(movieDirectorPair.get(movieName) != null){
-                movieDirectorPair.remove(movieName);
-                movieDb.remove(movieName);
+
+        for(String director : directorDb.keySet()){
+            directorDb.remove(director);
+            for(String movie : movieDirectorPair.keySet()){
+                if(movieDirectorPair.get(movie).equals(director)){
+                    movieDb.remove(movie);
+                    movieDirectorPair.remove(movie);
+                }
             }
         }
 
