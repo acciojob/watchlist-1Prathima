@@ -71,45 +71,45 @@ public class MovieRepository {
 
     public String deleteDirectorByName(String name){
         directorDb.remove(name);
-        for(String movieName : movieDirectorPair.keySet()){
-            if(movieDirectorPair.get(movieName) == name){
-                movieDirectorPair.remove(movieName);
-                movieDb.remove(movieName);
-            }
-        }
-
-        //Iterate over a hashmap
-//        for(Map.Entry<String, String> entry : movieDirectorPair.entrySet()){
-//            if(entry.getValue().equals(name)){
-//                String movieName = entry.getKey();
-//                movieDb.remove(movieName);
+//        for(String movieName : movieDirectorPair.keySet()){
+//            if(movieDirectorPair.get(movieName) == name){
 //                movieDirectorPair.remove(movieName);
+//                movieDb.remove(movieName);
 //            }
 //        }
+
+        //Iterate over a hashmap
+        for(Map.Entry<String, String> entry : movieDirectorPair.entrySet()){
+            if(entry.getValue().equals(name)){
+                String movieName = entry.getKey();
+                movieDb.remove(movieName);
+                movieDirectorPair.remove(movieName);
+            }
+        }
         return "Deleted director and it's movies successfully";
     }
 
     public String deleteAllDirectors(){
-        directorDb.clear();
-        for(String movieName : movieDirectorPair.keySet()){
-            if(movieDirectorPair.get(movieName) != null){
-                movieDirectorPair.remove(movieName);
-                movieDb.remove(movieName);
-            }
-        }
-
-        //iterate
-//        for(String directorName : directorDb.keySet()) {
-//            directorDb.remove(directorName);
-//
-//            for (Map.Entry<String, String> entry : movieDirectorPair.entrySet()) {
-//                if (entry.getValue().equals(directorName)) {
-//                    String movieName = entry.getKey();
-//                    movieDb.remove(movieName);
-//                    movieDirectorPair.remove(movieName);
-//                }
+//        directorDb.clear();
+//        for(String movieName : movieDirectorPair.keySet()){
+//            if(movieDirectorPair.get(movieName) != null){
+//                movieDirectorPair.remove(movieName);
+//                movieDb.remove(movieName);
 //            }
 //        }
+
+        //iterate
+        for(String directorName : directorDb.keySet()) {
+            directorDb.remove(directorName);
+
+            for (Map.Entry<String, String> entry : movieDirectorPair.entrySet()) {
+                if (entry.getValue().equals(directorName)) {
+                    String movieName = entry.getKey();
+                    movieDb.remove(movieName);
+                    movieDirectorPair.remove(movieName);
+                }
+            }
+        }
         return "Deleted all directors successfully";
     }
 }
