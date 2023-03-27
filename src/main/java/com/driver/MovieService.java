@@ -8,8 +8,8 @@ import java.util.List;
 @Service
 public class MovieService {
 
-    @Autowired
-    MovieRepository movieRepository;
+//    @Autowired
+    MovieRepository movieRepository = new MovieRepository();
 
     public String addMovie(Movie movie){
 
